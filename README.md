@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://vid19.github.io
+**URL**:
 
 ## What technologies are used for this project?
 
