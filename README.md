@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**:
+**URL**: https://vid19.github.io/my-portfolio-website/
 
 ## What technologies are used for this project?
 
