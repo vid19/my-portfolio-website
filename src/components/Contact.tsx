@@ -1,57 +1,108 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Mail, MapPin } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 
 const contactInfo = [
   {
     icon: Mail,
     label: "Email",
     value: "vv2466@nyu.edu",
-    href: "mailto:your.vv2466@nyu.edu",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+1 (646) 209-2569 ",
-    href: "tel:+16462092569",
+    href: "mailto:vv2466@nyu.edu",
   },
   {
     icon: MapPin,
     label: "Location",
-    value: "Brooklyn, NY",
-    href: "https://www.google.com/maps?q=Brooklyn,NY",
+    value: "United States",
+    href: null as string | null,
+  },
+];
+
+const socialLinks = [
+  {
+    icon: Github,
+    label: "GitHub",
+    value: "vid19",
+    href: "https://github.com/vid19",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "vidyarthv",
+    href: "https://linkedin.com/in/vidyarthv",
   },
 ];
 
 const Contact = () => {
   return (
-    <section
-      id="contact"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-background to-secondary/20"
-    >
-      <div className="container mx-auto max-w-4xl">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 md:mb-12 text-center bg-gradient-primary bg-clip-text text-transparent">
-          Spill the Tea (About Your Project!)
-        </h2>
-        <p className="text-center text-base sm:text-lg text-muted-foreground mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-2">
-          I’m always excited to discuss new projects, share creative ideas and
-          explore opportunities to bring your vision to life.
+    <section id="contact" className="py-20 sm:py-28 px-4 sm:px-6">
+      <div className="container mx-auto max-w-3xl">
+        <p className="text-primary text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-center">
+          Get In Touch
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-          {contactInfo.map((info, index) => (
-            <a key={index} href={info.href} className="block group">
-              <Card className="bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 hover:shadow-glow hover:scale-105 h-full">
-                <CardContent className="pt-6 pb-6 text-center">
-                  <div className="mb-3 sm:mb-4 inline-block p-2.5 sm:p-3 bg-gradient-primary rounded-lg group-hover:scale-110 transition-transform">
-                    <info.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <h3 className="text-base sm:text-lg font-semibold mb-2">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center tracking-tight">
+          Let's Work Together
+        </h2>
+        <p className="text-center text-sm sm:text-base text-muted-foreground mb-12 max-w-md mx-auto leading-relaxed">
+          Open to new opportunities, collaborations, or just a good
+          conversation about tech.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+          {contactInfo.map((info, index) => {
+            const inner = (
+              <>
+                <div className="p-2.5 bg-primary/10 rounded-sm group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                  <info.icon className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">
                     {info.label}
-                  </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground group-hover:text-primary transition-colors break-words px-2">
+                  </p>
+                  <p className="text-sm font-medium group-hover:text-primary transition-colors">
                     {info.value}
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </>
+            );
+
+            return info.href ? (
+              <a
+                key={index}
+                href={info.href}
+                className="bg-card/50 border border-border rounded-md p-4 hover:border-primary/30 transition-all duration-300 hover:shadow-glow group flex items-center gap-4"
+              >
+                {inner}
+              </a>
+            ) : (
+              <div
+                key={index}
+                className="bg-card/50 border border-border rounded-md p-4 group flex items-center gap-4"
+              >
+                {inner}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {socialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-card/50 border border-border rounded-md p-4 hover:border-primary/30 transition-all duration-300 hover:shadow-glow group flex items-center gap-4"
+            >
+              <div className="p-2.5 bg-primary/10 rounded-sm group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                <link.icon className="h-4 w-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-0.5">
+                  {link.label}
+                </p>
+                <p className="text-sm font-medium group-hover:text-primary transition-colors">
+                  /{link.value}
+                </p>
+              </div>
             </a>
           ))}
         </div>
