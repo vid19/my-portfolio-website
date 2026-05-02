@@ -1,76 +1,86 @@
-import {
-  Code2,
-  Database,
-  Palette,
-  Rocket,
-  Brain,
-  Cloud,
-  TestTube,
-} from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Code2, Globe, Brain, Cloud, MessageSquare, Wrench } from "lucide-react";
 
-const skills = [
+const skillGroups = [
   {
     icon: Code2,
-    title: "Frontend Dev",
-    description: "React, Redux-Saga, JavaScript, TypeScript, Responsive Design",
+    title: "Languages",
+    tags: [
+      "Python", "Go", "Java", "C++", "C#", "JavaScript (React.js)",
+      "Swift", "HTML/CSS", "SQL", "MQL",
+    ],
   },
   {
-    icon: Database,
-    title: "Backend Dev",
-    description: "Spring Boot, Go (Gin), Python, Java, RESTful APIs",
-  },
-  {
-    icon: Brain,
-    title: "ML & AI",
-    description:
-      "PyTorch, TensorFlow, Detectron2, Scikit-Learn, Computer Vision",
+    icon: Globe,
+    title: "Web Frameworks",
+    tags: ["Django", "Spring Boot", "Gin", "React", "Redux-Saga", "D3.js"],
   },
   {
     icon: Cloud,
     title: "Cloud & DevOps",
-    description: "AWS (EC2, Lambda, S3), Docker, Kubernetes, Jenkins, CI/CD",
+    tags: [
+      "AWS (EC2, Lambda, S3, Cognito)", "GCP", "Azure",
+      "Docker", "Kubernetes", "Datadog",
+    ],
   },
   {
-    icon: Database,
-    title: "Databases & Messaging",
-    description: "MySQL, MongoDB, PostgreSQL, RabbitMQ, Kafka",
+    icon: Brain,
+    title: "ML / NLP",
+    tags: [
+      "Pandas", "NumPy", "Scikit-Learn", "PyTorch",
+      "LangChain", "LangGraph", "RAG",
+    ],
   },
   {
-    icon: TestTube,
-    title: "Testing & Monitoring",
-    description: "Postman, JUnit, DataDog, Performance Tuning, API Testing",
+    icon: MessageSquare,
+    title: "Messaging & Methods",
+    tags: ["RabbitMQ", "Kafka", "Agile", "Kanban"],
+  },
+  {
+    icon: Wrench,
+    title: "Tools & OS",
+    tags: [
+      "Git", "Figma", "Jira", "Confluence", "VSCode",
+      "Intellij", "Unix", "Linux",
+    ],
   },
 ];
 
 const Skills = () => {
   return (
-    <section
-      id="skills"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-b from-background to-secondary/20"
-    >
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-10 md:mb-12 text-center bg-gradient-primary bg-clip-text text-transparent">
+    <section id="skills" className="py-20 sm:py-28 px-4 sm:px-6">
+      <div className="container mx-auto max-w-5xl">
+        <p className="text-primary text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-center">
+          What I Work With
+        </p>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-14 text-center tracking-tight">
           Skills & Expertise
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {skills.map((skill, index) => (
-            <Card
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {skillGroups.map((group, index) => (
+            <div
               key={index}
-              className="bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 hover:shadow-glow hover:scale-105"
+              className="bg-card/50 border border-border rounded-md p-5 hover:border-primary/30 transition-all duration-300 hover:shadow-glow group"
             >
-              <CardContent className="pt-6 pb-6">
-                <div className="mb-3 sm:mb-4 inline-block p-2.5 sm:p-3 bg-gradient-primary rounded-lg">
-                  <skill.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-primary/10 rounded-sm group-hover:bg-primary/20 transition-colors">
+                  <group.icon className="h-4 w-4 text-primary" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                  {skill.title}
+                <h3 className="text-sm font-semibold tracking-wide">
+                  {group.title}
                 </h3>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  {skill.description}
-                </p>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {group.tags.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-0.5 text-xs bg-secondary text-muted-foreground border border-border rounded-sm font-mono"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
