@@ -1,11 +1,11 @@
-import { Code2, Globe, Brain, Cloud, MessageSquare, Wrench } from "lucide-react";
+import { Code2, Globe, Brain, Cloud, MessageSquare, Wrench, Factory } from "lucide-react";
 
 const skillGroups = [
   {
     icon: Code2,
     title: "Languages",
     tags: [
-      "Python", "Go", "Java", "C++", "C#", "JavaScript (React.js)",
+      "Python (asyncio)", "Go", "Java", "C++", "C#", "JavaScript (React.js)",
       "Swift", "HTML/CSS", "SQL", "MQL",
     ],
   },
@@ -19,7 +19,7 @@ const skillGroups = [
     title: "Cloud & DevOps",
     tags: [
       "AWS (EC2, Lambda, S3, Cognito)", "GCP", "Azure",
-      "Docker", "Kubernetes", "Datadog",
+      "Docker", "Docker Compose", "Kubernetes", "Datadog", "GitHub Actions",
     ],
   },
   {
@@ -27,20 +27,25 @@ const skillGroups = [
     title: "ML / NLP",
     tags: [
       "Pandas", "NumPy", "Scikit-Learn", "PyTorch",
-      "LangChain", "LangGraph", "RAG",
+      "LangChain", "LangGraph", "RAG", "Ollama", "Detectron2", "OpenCV",
     ],
   },
   {
     icon: MessageSquare,
     title: "Messaging & Methods",
-    tags: ["RabbitMQ", "Kafka", "Agile", "Kanban"],
+    tags: ["RabbitMQ", "Kafka", "Zenoh", "MQTT", "Agile", "Kanban"],
+  },
+  {
+    icon: Factory,
+    title: "Industrial Automation",
+    tags: ["WinCC OA (SCADA)", "MTP / IEC 63280", "Siemens NX (NXOpen)"],
   },
   {
     icon: Wrench,
     title: "Tools & OS",
     tags: [
-      "Git", "Figma", "Jira", "Confluence", "VSCode",
-      "Intellij", "Unix", "Linux",
+      "Git", "GitHub CLI", "Playwright", "Figma", "Jira", "Confluence",
+      "VSCode", "Intellij", "Unix", "Linux",
     ],
   },
 ];

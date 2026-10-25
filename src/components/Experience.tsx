@@ -2,16 +2,56 @@ import { ExternalLink } from "lucide-react";
 
 const experiences = [
   {
+    title: "Course Assistant – CS-GY 6063 Graduate Software Engineering",
+    company: "NYU Tandon School of Engineering",
+    period: "Sep 2026 – Present",
+    location: "New York, NY",
+    bullets: [
+      "Serve as section leader and grader for a graduate software engineering course, holding weekly office hours and resolving student questions on design, testing, and team workflows.",
+      "Review student pull requests across a shared course GitHub organization, giving code-level feedback on architecture, testing, and engineering practice.",
+      "Built Python and GitHub CLI automation for repository provisioning and grading audits, cutting manual course administration overhead.",
+    ],
+    technologies: ["Python", "GitHub CLI", "Git", "Code Review"],
+    publication: null,
+  },
+  {
+    title: "AI Software Intern – Automation Engineering Software",
+    company: "Siemens Research and Pre-Development (RPD)",
+    period: "Jun 2026 – Aug 2026",
+    location: "Princeton, NJ",
+    bullets: [
+      "Developed AI agent components for an industrial process automation research platform in Python with asyncio, coordinating asynchronous control and inference workloads without blocking real-time operations.",
+      "Applied AI safety and guardrail patterns to model-generated recommendations in a safety-critical operational technology environment.",
+      "Integrated services across a Zenoh publish/subscribe message bus and a WinCC OA SCADA runtime, implementing bindings against the MTP / IEC 63280 modular automation standards.",
+      "Containerized a multi-service research stack with Docker Compose, producing a reproducible environment that shortened onboarding for new engineers.",
+      "Built a Python service that resolves part identifiers into STEP files across supplier catalogs, and extended it with Siemens NX automation via NXOpen to qualify parts into assembly-ready components, projected to eliminate 5 engineering hours monthly.",
+    ],
+    technologies: ["Python", "asyncio", "Zenoh", "WinCC OA", "Docker", "NXOpen"],
+    publication: null,
+  },
+  {
+    title: "Research Assistant (Volunteer)",
+    company: "NYU mLab, under Dr. Danny Huang",
+    period: "Apr 2026 – Jun 2026",
+    location: "New York, NY",
+    bullets: [
+      "Built a 945-app evaluation dataset for AI safety research on AI companion apps, combining a classifier, field extractor, rule-based inference, and manual override pipeline.",
+      "Developed a Playwright-based automation harness to systematically interact with and evaluate AI companion platforms.",
+    ],
+    technologies: ["Python", "Playwright", "Data Pipelines", "AI Safety"],
+    publication: null,
+  },
+  {
     title: "Software Developer – Full Stack",
     company: "Toyota Connected",
     period: "Jul 2023 – Aug 2025",
     location: "Chennai / Bengaluru, India",
     bullets: [
-      "Delivered 10+ production-grade full-stack features for DriveLink and Fleetlink B2B mobility platforms, enabling safety-critical vehicle workflows and large-scale fleet operations supporting Toyota Connected North America.",
-      "Led end-to-end development of the Fleet platform — built scalable REST APIs and responsive React UIs, integrated AWS Cognito for secure authentication, reducing API error rates to <4% with 119 ms latency under traffic.",
-      "Implemented Spring Boot microservices for safety features in the 24th-Gen Data Communication Module rollout for Toyota/Lexus vehicles, integrating MQTT-based vehicle-to-cloud telemetry flows.",
-      "Automated CI/CD pipelines using Jenkins, Docker, AWS and Datadog — achieving >95% deployment success rate and ~98% uptime.",
-      "Directed a 5-member team at Toyota's Global AI hackathon to prototype a vehicle damage estimation tool, achieving 97% accuracy using Detectron2 and a RAG-powered module for cost analysis and diagnostic reporting.",
+      "Delivered 10+ production full-stack features using React, Java and Go for the DriveLink and Fleetlink B2B mobility platforms, enabling safety-critical vehicle workflows and large-scale fleet operations supporting Toyota Connected North America.",
+      "Led end-to-end development of the Fleet platform, building scalable REST APIs and responsive React interfaces and integrating AWS Cognito for secure authentication, sustaining 119 ms median latency under production traffic.",
+      "Implemented Spring Boot microservices for safety features in the 24th-generation Data Communication Module rollout across Toyota and Lexus vehicles, integrating MQTT-based vehicle-to-cloud telemetry flows.",
+      "Automated CI/CD pipelines with Jenkins, Docker and Datadog, cutting release overhead and standardizing deployment across services.",
+      "Directed a 5-member team at Toyota's Global AI Hackathon to prototype a vehicle damage estimation tool, reaching 97% accuracy with Detectron2 and building a RAG-powered module for cost analysis and diagnostic reporting.",
     ],
     technologies: [
       "Spring Boot", "Go", "React", "Docker", "AWS", "MongoDB", "Datadog", "Jenkins",

@@ -4,7 +4,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const RESUME_URL =
-  "https://drive.google.com/file/d/15uFVC570lvOUqCcqgMMNHoKGCjEQuNrX/view?usp=drive_link";
+  "https://drive.google.com/file/d/1Uy-6h4d11HzjqoG67sFPgucpas_0qCxZ/view?usp=sharing";
 
 const greetingsArray = [
   "Hi",
@@ -625,7 +625,7 @@ const Hero = () => {
           className="text-xs sm:text-sm text-muted-foreground mb-3 font-semibold tracking-[0.25em] uppercase animate-fade-in [animation-fill-mode:backwards]"
           style={{ animationDelay: "0.68s" }}
         >
-          Software Engineer &nbsp;·&nbsp; Full Stack &nbsp;·&nbsp; ML
+          Software Engineer &nbsp;·&nbsp; AI Systems &nbsp;·&nbsp; Full Stack
         </p>
 
         {/* Description */}
@@ -633,8 +633,10 @@ const Hero = () => {
           className="text-sm sm:text-base text-muted-foreground mb-10 max-w-lg mx-auto leading-relaxed animate-fade-in [animation-fill-mode:backwards]"
           style={{ animationDelay: "0.82s" }}
         >
-          2+ years building enterprise mobility platforms at Toyota. Currently
-          studying CS at NYU. Passionate about clean systems and applied ML.
+          Software engineer with 2+ years building enterprise mobility
+          platforms at Toyota and recent AI engineering work in industrial
+          automation at Siemens. Now pursuing an M.S. in CS at NYU, focused on
+          agentic AI, distributed systems, and applied ML.
         </p>
 
         {/* CTAs */}

@@ -4,7 +4,7 @@ const stats = [
   { value: "2+", label: "Years Experience" },
   { value: "10+", label: "Production Features" },
   { value: "3.8", label: "GPA @ NYU" },
-  { value: "M.S.", label: "CS @ NYU" },
+  { value: "1", label: "IEEE Publication" },
 ];
 
 const education = [
@@ -13,7 +13,7 @@ const education = [
     degree: "M.S. Computer Science",
     gpa: "GPA: 3.8 / 4.0",
     period: "Sep 2025 – May 2027 (Expected)",
-    detail: "Algorithms · Machine Learning · Software Engineering · Internet Security & Privacy",
+    detail: "Algorithms · Machine Learning · Software Engineering · Internet Security & Privacy · Big Data · Generative AI",
   },
   {
     school: "SSN College of Engineering, Anna University",
@@ -53,14 +53,20 @@ const About = () => {
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Graduate CS student at NYU with 2+ years of full-time industry
                 experience building production-grade full stack and distributed
-                cloud systems across mobility and connected vehicle platforms.
+                cloud systems, and a recent internship building AI agent
+                components for industrial automation research at Siemens.
               </p>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 At Toyota Connected I delivered features across DriveLink and
                 Fleetlink B2B platforms, led a hackathon team to a 97%-accuracy
-                AI damage detection tool, and automated CI/CD pipelines achieving
-                ~98% uptime. I'm equally comfortable in Go microservices, React
-                UIs, and PyTorch model pipelines.
+                AI damage detection tool, and automated CI/CD pipelines that
+                standardized deployment across services. At Siemens I worked where AI meets operational
+                technology, applying guardrail patterns to model outputs in
+                safety-critical environments. Outside of work I research AI
+                safety in companion apps at NYU mLab and serve as a Course
+                Assistant for Graduate Software Engineering. I'm equally
+                comfortable in Go microservices, React UIs, async Python
+                services, and PyTorch model pipelines.
               </p>
             </div>
           </div>

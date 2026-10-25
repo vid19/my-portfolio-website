@@ -11,7 +11,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Location",
-    value: "United States",
+    value: "New York, NY",
     href: null as string | null,
   },
 ];

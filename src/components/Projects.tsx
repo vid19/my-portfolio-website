@@ -30,10 +30,10 @@ const projects = [
   {
     num: "04",
     title: "Cloud Console Automation Agent",
-    period: "In Progress",
+    period: "Sep – Dec 2025",
     description:
-      "Designing a system that executes plain-English cloud console tasks end-to-end with role-based access, audit logs, and reproducibility for task execution, evidence generation, and review.",
-    tags: ["Django", "React", "Browser-Use", "Cloud Automation"],
+      "Built an LLM-powered browser automation system that executes Google Cloud Console workflows from plain-English instructions, using Gemini 2.5 Flash for task planning and cutting manual GCP task time by 60%+. Orchestrated a real-time multi-task engine with Django Channels and Electron, using persistent Chrome sessions, WebSocket sync, and pause/resume controls for concurrent task execution.",
+    tags: ["Django Channels", "Electron", "Vertex AI", "Gemini", "WebSockets"],
     github: null,
   },
 ];
