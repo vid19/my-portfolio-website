@@ -13,7 +13,8 @@ const education = [
     degree: "M.S. Computer Science",
     gpa: "GPA: 3.8 / 4.0",
     period: "Sep 2025 – May 2027 (Expected)",
-    detail: "Algorithms · Machine Learning · Software Engineering · Internet Security & Privacy · Big Data · Generative AI",
+    detail:
+      "Algorithms · Machine Learning · Software Engineering · Internet Security & Privacy · Big Data · Generative AI",
   },
   {
     school: "SSN College of Engineering, Anna University",
@@ -60,13 +61,13 @@ const About = () => {
                 At Toyota Connected I delivered features across DriveLink and
                 Fleetlink B2B platforms, led a hackathon team to a 97%-accuracy
                 AI damage detection tool, and automated CI/CD pipelines that
-                standardized deployment across services. At Siemens I worked where AI meets operational
-                technology, applying guardrail patterns to model outputs in
-                safety-critical environments. Outside of work I research AI
-                safety in companion apps at NYU mLab and serve as a Course
-                Assistant for Graduate Software Engineering. I'm equally
-                comfortable in Go microservices, React UIs, async Python
-                services, and PyTorch model pipelines.
+                standardized deployment across services. At Siemens I worked
+                where AI meets operational technology, applying guardrail
+                patterns to model outputs in safety-critical environments.
+                Outside of work I research AI safety in companion apps at NYU
+                mLab and serve as a Course Assistant for Graduate Software
+                Engineering. I'm equally comfortable in Go microservices, React
+                UIs, async Python services and PyTorch model pipelines.
               </p>
             </div>
           </div>
@@ -85,11 +86,17 @@ const About = () => {
                   <div>
                     <p className="text-sm font-semibold">{edu.school}</p>
                     <p className="text-xs text-primary mt-0.5">{edu.degree}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{edu.detail}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {edu.detail}
+                    </p>
                   </div>
                   <div className="sm:text-right flex-shrink-0">
-                    <p className="text-xs font-mono text-muted-foreground">{edu.period}</p>
-                    <p className="text-xs font-semibold text-primary/80 mt-0.5">{edu.gpa}</p>
+                    <p className="text-xs font-mono text-muted-foreground">
+                      {edu.period}
+                    </p>
+                    <p className="text-xs font-semibold text-primary/80 mt-0.5">
+                      {edu.gpa}
+                    </p>
                   </div>
                 </div>
               ))}

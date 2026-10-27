@@ -13,6 +13,13 @@ export default {
       },
     },
     extend: {
+      // Height-aware breakpoints for the hero. `fit`: tall enough to show the
+      // text and the bridge in one screen. `md-short`: wide but short (landscape
+      // phones, small laptop windows), where spacing is tightened.
+      screens: {
+        fit: { raw: "(min-width: 768px) and (min-height: 640px)" },
+        "md-short": { raw: "(min-width: 768px) and (max-height: 759px)" },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

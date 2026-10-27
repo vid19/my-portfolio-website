@@ -53,7 +53,7 @@ const skillGroups = [
 const Skills = () => {
   return (
     <section id="skills" className="py-20 sm:py-28 px-4 sm:px-6">
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-4xl">
         <p className="text-primary text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-center">
           What I Work With
         </p>
@@ -61,33 +61,22 @@ const Skills = () => {
           Skills & Expertise
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {skillGroups.map((group, index) => (
+        <dl className="bg-card/50 border border-border rounded-md divide-y divide-border">
+          {skillGroups.map((group) => (
             <div
-              key={index}
-              className="bg-card/50 border border-border rounded-md p-5 hover:border-primary/30 transition-all duration-300 hover:shadow-glow group"
+              key={group.title}
+              className="grid grid-cols-1 sm:grid-cols-[13rem_1fr] gap-1.5 sm:gap-6 px-4 sm:px-6 py-3.5 sm:py-4 hover:bg-primary/[0.03] transition-colors"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-primary/10 rounded-sm group-hover:bg-primary/20 transition-colors">
-                  <group.icon className="h-4 w-4 text-primary" />
-                </div>
-                <h3 className="text-sm font-semibold tracking-wide">
-                  {group.title}
-                </h3>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {group.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-0.5 text-xs bg-secondary text-muted-foreground border border-border rounded-sm font-mono"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <dt className="flex items-center gap-2.5 text-sm font-semibold">
+                <group.icon className="h-4 w-4 text-primary flex-shrink-0" />
+                {group.title}
+              </dt>
+              <dd className="text-sm text-muted-foreground leading-relaxed">
+                {group.tags.join(" · ")}
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
     </section>
   );

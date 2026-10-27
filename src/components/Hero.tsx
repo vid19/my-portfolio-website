@@ -1,10 +1,10 @@
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 import { useEffect, useMemo, useRef, useState } from "react";
-
-const RESUME_URL =
-  "https://drive.google.com/file/d/1Uy-6h4d11HzjqoG67sFPgucpas_0qCxZ/view?usp=sharing";
+import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { GITHUB_URL, LINKEDIN_URL, RESUME_URL } from "@/lib/links";
 
 const greetingsArray = [
   "Hi",
@@ -19,12 +19,18 @@ const greetingsArray = [
   "வணக்கம்",
 ];
 
-const useTypewriter = (words: string[], typingSpeed = 80, pause = 1200) => {
+const useTypewriter = (
+  words: string[],
+  typingSpeed = 80,
+  pause = 1200,
+  disabled = false,
+) => {
   const [display, setDisplay] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    if (disabled) return;
     const current = words[wordIndex % words.length];
     let timeout: number;
     if (!isDeleting) {
@@ -48,9 +54,9 @@ const useTypewriter = (words: string[], typingSpeed = 80, pause = 1200) => {
       }
     }
     return () => window.clearTimeout(timeout);
-  }, [display, isDeleting, wordIndex, words, typingSpeed, pause]);
+  }, [display, isDeleting, wordIndex, words, typingSpeed, pause, disabled]);
 
-  return display;
+  return disabled ? words[0] : display;
 };
 
 // ─── Brooklyn Bridge ──────────────────────────────────────────────────────────
@@ -65,6 +71,7 @@ const CX_R = 1040;
 const TW = 26; // tower half-width
 const TT = 55; // tower top y
 const DY = 242; // deck y
+const EXT = 2400; // how far deck/water run past the viewBox edges
 
 // Main cable: left shore → left tower → slight sag → right tower → right shore
 const CABLE = `M 0,175 C 155,168 305,57 ${CX_L},${TT} C 508,65 932,65 ${CX_R},${TT} C 1135,57 1285,168 1440,175`;
@@ -114,30 +121,41 @@ const STARS = [
   { x: 610, y: 8, r: 0.9, d: 0.3, dur: 2.8 },
 ];
 
-const BrooklynBridge = () => {
+const BrooklynBridge = ({ reducedMotion }: { reducedMotion: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  // SMIL <animate> tags ignore CSS, so pause them directly
+  useEffect(() => {
+    if (reducedMotion) svgRef.current?.pauseAnimations();
+    else svgRef.current?.unpauseAnimations();
+  }, [reducedMotion]);
 
   useEffect(() => {
+    if (reducedMotion) return;
     const onScroll = () => {
       if (ref.current)
         ref.current.style.transform = `translateY(${-window.scrollY * 0.06}px)`;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [reducedMotion]);
 
   return (
+    // Mobile: pinned to the section bottom. md+: last flex item in the hero
+    // column, starting at full-width height (300/1440 = 20.84vw) and shrinking
+    // when the viewport is too short, so the deck never drops below the fold.
     <div
       ref={ref}
-      className="absolute bottom-0 inset-x-0 pointer-events-none animate-fade-in [animation-fill-mode:backwards] z-0"
+      className="absolute bottom-0 inset-x-0 pointer-events-none animate-fade-in [animation-fill-mode:backwards] z-0 md:relative md:bottom-auto md:w-full md:shrink md:basis-[20.84vw] md:min-h-[140px]"
       style={{ animationDelay: "1.3s" }}
     >
       <svg
+        ref={svgRef}
         viewBox="0 0 1440 300"
         preserveAspectRatio="xMidYMax meet"
-        className="w-full block"
+        className="w-full block overflow-visible h-[clamp(140px,22vw,9999px)] md:h-full"
         style={{
-          height: "clamp(140px, 22vw, 9999px)",
           filter: "drop-shadow(0 0 16px hsl(168 90% 45% / 0.28))",
         }}
         aria-hidden="true"
@@ -345,17 +363,35 @@ const BrooklynBridge = () => {
           strokeOpacity="0.38"
         />
 
+        {/* Shore anchorages for the cable ends; outside the viewBox, so they
+            only show when the drawing is scaled down on short desktop screens */}
+        {[
+          `-64,${DY - 3} -52,170 0,170 0,${DY - 3}`,
+          `1440,${DY - 3} 1440,170 1492,170 1504,${DY - 3}`,
+        ].map((points, i) => (
+          <polygon
+            key={`anchor${i}`}
+            points={points}
+            fill="url(#towerGrad)"
+            stroke={T}
+            strokeWidth="0.9"
+            strokeOpacity="0.38"
+          />
+        ))}
+
+        {/* Deck, waterline and water extend past the viewBox (overflow-visible)
+            so they still reach the screen edges when the bridge is scaled down */}
         <rect
-          x="0"
+          x={-EXT}
           y={DY - 3}
-          width="1440"
+          width={1440 + EXT * 2}
           height="9"
           fill="hsl(168,32%,15%)"
         />
         <line
-          x1="0"
+          x1={-EXT}
           y1={DY - 3}
-          x2="1440"
+          x2={1440 + EXT}
           y2={DY - 3}
           stroke={T}
           strokeWidth="1.2"
@@ -438,9 +474,9 @@ const BrooklynBridge = () => {
         </g>
 
         <line
-          x1="0"
+          x1={-EXT}
           y1={DY + 8}
-          x2="1440"
+          x2={1440 + EXT}
           y2={DY + 8}
           stroke={T}
           strokeWidth="1.5"
@@ -453,9 +489,9 @@ const BrooklynBridge = () => {
           />
         </line>
         <rect
-          x="0"
+          x={-EXT}
           y={DY + 9}
-          width="1440"
+          width={1440 + EXT * 2}
           height={300 - DY - 9}
           fill="url(#bbWaterGrad)"
         />
@@ -530,14 +566,18 @@ const BrooklynBridge = () => {
 // ─── Hero ───────────────────────────────────────────────────────────────────────
 const Hero = () => {
   const greetings = useMemo(() => greetingsArray, []);
-  const typed = useTypewriter(greetings, 80, 1200);
+  const reducedMotion = useReducedMotion();
+  const typed = useTypewriter(greetings, 80, 1200, reducedMotion);
 
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    // md+: a column of text then bridge. With `fit` the hero is locked to one
+    // screen and the bridge shrinks to make room; on shorter screens it only
+    // has a min height, so it grows and scrolls instead of clipping the text.
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden md:flex-col md:min-h-svh md:pt-16 fit:h-svh">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -577,11 +617,10 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className="container mx-auto px-4 sm:px-6 z-10 text-center max-w-5xl"
-        style={{ paddingBottom: "clamp(80px, 22vw, 9999px)" }}
+        className="container mx-auto px-4 sm:px-6 pt-20 pb-[clamp(80px,22vw,9999px)] z-10 text-center max-w-5xl md:my-auto md:shrink-0 md:py-4"
       >
         {/* Typewriter greeting */}
-        <div className="mb-5 h-7 flex items-center justify-center">
+        <div className="mb-5 md-short:mb-2 h-7 flex items-center justify-center">
           <span
             className="text-primary text-base font-medium tracking-[0.2em] uppercase animate-fade-in [animation-fill-mode:backwards]"
             style={{ animationDelay: "0.05s" }}
@@ -592,7 +631,7 @@ const Hero = () => {
         </div>
 
         {/* Name */}
-        <h1 className="font-bold tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-0">
+        <h1 className="font-bold tracking-tight text-5xl sm:text-6xl md:text-[clamp(3.5rem,10svh,4.5rem)] lg:text-[clamp(3.5rem,10svh,6rem)] mb-0">
           <span className="block overflow-hidden py-1">
             <span
               className="inline-block animate-text-reveal"
@@ -616,13 +655,13 @@ const Hero = () => {
 
         {/* Accent line */}
         <div
-          className="h-px w-28 mx-auto mt-3 mb-5 origin-left animate-draw-x [animation-fill-mode:backwards] bg-gradient-primary"
+          className="h-px w-28 mx-auto mt-3 mb-5 md-short:mt-2 md-short:mb-3 origin-left animate-draw-x [animation-fill-mode:backwards] bg-gradient-primary"
           style={{ animationDelay: "0.55s" }}
         />
 
         {/* Role */}
         <p
-          className="text-xs sm:text-sm text-muted-foreground mb-3 font-semibold tracking-[0.25em] uppercase animate-fade-in [animation-fill-mode:backwards]"
+          className="text-[11px] sm:text-sm text-muted-foreground mb-3 font-semibold tracking-[0.12em] sm:tracking-[0.25em] uppercase animate-fade-in [animation-fill-mode:backwards]"
           style={{ animationDelay: "0.68s" }}
         >
           Software Engineer &nbsp;·&nbsp; AI Systems &nbsp;·&nbsp; Full Stack
@@ -630,20 +669,17 @@ const Hero = () => {
 
         {/* Description */}
         <p
-          className="text-sm sm:text-base text-muted-foreground mb-10 max-w-lg mx-auto leading-relaxed animate-fade-in [animation-fill-mode:backwards]"
+          className="text-[15px] sm:text-base md:text-lg md-short:text-base text-foreground/75 mb-8 md-short:mb-5 max-w-xl md:max-w-2xl mx-auto leading-relaxed animate-fade-in [animation-fill-mode:backwards]"
           style={{ animationDelay: "0.82s" }}
         >
-          Software engineer with 2+ years building enterprise mobility
-          platforms at Toyota and recent AI engineering work in industrial
-          automation at Siemens. Now pursuing an M.S. in CS at NYU, focused on
-          agentic AI, distributed systems, and applied ML.
+          Software engineer with 2+ years building enterprise mobility platforms
+          at Toyota and recent AI engineering work in industrial automation at
+          Siemens. Now pursuing an M.S. in CS at NYU, focused on agentic AI,
+          distributed systems and applied ML.
         </p>
 
-        {/* CTAs */}
-        <div
-          className="flex flex-col sm:flex-row gap-3 justify-center mb-10 px-4 animate-fade-in [animation-fill-mode:backwards]"
-          style={{ animationDelay: "0.96s" }}
-        >
+        {/* CTAs: rendered without an entrance animation so they're usable on first paint */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-6 md-short:mb-4">
           <Button
             asChild
             size="lg"
@@ -661,71 +697,39 @@ const Hero = () => {
           >
             Get in Touch
           </Button>
-        </div>
-
-        {/* Social links */}
-        <div
-          className="flex gap-8 justify-center animate-fade-in [animation-fill-mode:backwards]"
-          style={{ animationDelay: "1.1s" }}
-        >
-          <a
-            href="https://github.com/vid19"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors duration-200"
-          >
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          <div className="flex items-center gap-1">
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="p-2.5 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors duration-200"
             >
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-              <path d="M9 18c-4.51 2-5-2-7-2" />
-            </svg>
-          </a>
-          <a
-            href="https://linkedin.com/in/vidyarthv"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors duration-200"
-          >
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              <GithubIcon />
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="p-2.5 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors duration-200"
             >
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-              <rect width="4" height="12" x="2" y="9" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-          <a
-            href="mailto:vv2466@nyu.edu"
-            className="text-muted-foreground hover:text-primary transition-colors duration-200"
-          >
-            <Mail className="h-5 w-5" />
-          </a>
+              <LinkedinIcon />
+            </a>
+          </div>
         </div>
 
         {/* Location badge */}
         <div
-          className="mt-6 inline-flex items-center gap-2 text-xs text-muted-foreground/45 animate-fade-in [animation-fill-mode:backwards]"
-          style={{ animationDelay: "1.25s" }}
+          className="inline-flex items-center gap-2 text-xs text-muted-foreground/60 animate-fade-in [animation-fill-mode:backwards]"
+          style={{ animationDelay: "1.1s" }}
         >
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse" />
           <span className="font-mono tracking-wider">New York, NY · NYU</span>
         </div>
       </div>
 
-      <BrooklynBridge />
+      <BrooklynBridge reducedMotion={reducedMotion} />
     </section>
   );
 };
